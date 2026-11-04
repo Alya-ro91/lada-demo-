@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Студия Лада</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;600&display=swap">
+<style>
+/* Layout: одна колонка 720px, крупная шапка, прайс-лист с расчётом суммы, запись в 3 шага */
+:root {
+  --bg: #f7f4f8;
+  --surface: #ffffff;
+  --ink: #261a2e;
+  --muted: #6d6075;
+  --line: #e4dce8;
+  --accent: #b02a63;
+  --accent-ink: #ffffff;
+  --soft: #f0e6f1;
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17111b; --surface: #211826; --ink: #f3ebf5; --muted: #b3a5ba;
+    --line: #38293f; --accent: #ef6f9f; --accent-ink: #2a0f1b; --soft: #2a1d31;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17111b; --surface: #211826; --ink: #f3ebf5; --muted: #b3a5ba;
+  --line: #38293f; --accent: #ef6f9f; --accent-ink: #2a0f1b; --soft: #2a1d31;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+.sample {
+  margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 8px 16px;
+  background: var(--ink); color: var(--bg);
+  font-size: 13px; text-align: center;
+}
+header.hero { padding: 56px 0 40px; }
+.tag {
+  font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin: 0 0 16px;
+}
+h1 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(34px, 9vw, 56px); line-height: 1.08;
+  margin: 0 0 20px; text-wrap: balance;
+}
+.lead { font-size: 18px; color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-block; padding: 14px 22px; border-radius: 999px;
+  font-weight: 600; text-decoration: none; font-size: 16px;
+  background: var(--accent); color: var(--accent-ink);
+  border: 2px solid var(--accent);
+}
+.btn.alt { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+section { padding: 36px 0; border-top: 1px solid var(--line); }
+h2 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(22px, 5.5vw, 28px); margin: 0 0 20px; text-wrap: balance;
+}
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.facts li { background: var(--soft); padding: 16px; border-radius: 14px; min-width: 0; }
+.facts b { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 500; }
+.facts span { color: var(--muted); font-size: 14px; }
+
+.price { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.row {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+  padding: 16px 18px; border-bottom: 1px solid var(--line); cursor: pointer;
+}
+.row:last-of-type { border-bottom: 0; }
+.row input { width: 22px; height: 22px; accent-color: var(--accent); margin: 0; }
+.row .name { font-weight: 500; min-width: 0; }
+.row .name small { display: block; color: var(--muted); font-weight: 400; font-size: 14px; }
+.row .cost { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.total {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px;
+  padding: 18px; background: var(--soft);
+  font-variant-numeric: tabular-nums;
+}
+.total strong { font-family: var(--font-display); font-weight: 500; font-size: 20px; }
+.note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+
+ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 14px; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; min-width: 0; }
+ol.steps li::before {
+  content: counter(s); width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font-weight: 600;
+}
+ol.steps b { display: block; }
+ol.steps span { color: var(--muted); }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; }
+details + details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 500; }
+details p { margin: 10px 0 0; color: var(--muted); }
+
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 10px; }
+.contact p { margin: 0; }
+.contact .big { font-family: var(--font-display); font-size: clamp(20px, 5vw, 26px); font-weight: 500; overflow-wrap: anywhere; }
+.copy { justify-self: start; font: inherit; font-weight: 600; padding: 10px 18px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+footer { color: var(--muted); font-size: 13px; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: no-preference) { .btn, .copy { transition: transform .15s; } .btn:hover, .copy:hover { transform: translateY(-2px); } }
+</style>
+</head>
+<body>
+
+<div class="sample">Это образец сайта. Название, цены и контакты вымышленные, вы подставите свои.</div>
+<div class="wrap">
+  <header class="hero">
+    <p class="tag">Маникюр и педикюр · Ваш город</p>
+    <h1>Студия «Лада»: аккуратные ногти на 3 недели</h1>
+    <p class="lead">Принимаю по записи, один клиент за раз. Все инструменты проходят стерилизацию, а после процедуры вы получаете советы по уходу.</p>
+    <div class="btns">
+      <a class="btn" href="#zapis">Записаться</a>
+      <a class="btn alt" href="#price">Цены</a>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-about">
+    <h2 id="h-about">Коротко обо мне</h2>
+    <ul class="facts">
+      <li><b>5 лет</b><span>в профессии</span></li>
+      <li><b>10:00–20:00</b><span>ежедневно, по записи</span></li>
+      <li><b>1 клиент</b><span>за раз, без очередей</span></li>
+    </ul>
+  </section>
+
+  <section id="price" aria-labelledby="h-price">
+    <h2 id="h-price">Цены и расчёт</h2>
+    <div class="price">
+      <label class="row"><input type="checkbox" data-p="1500" data-m="90" checked><span class="name">Маникюр с покрытием<small>гель-лак, 90 минут</small></span><span class="cost">1 500 ₽</span></label>
+      <label class="row"><input type="checkbox" data-p="1100" data-m="60"><span class="name">Маникюр без покрытия<small>обработка и уход, 60 минут</small></span><span class="cost">1 100 ₽</span></label>
+      <label class="row"><input type="checkbox" data-p="2200" data-m="90"><span class="name">Педикюр<small>аппаратный, 90 минут</small></span><span class="cost">2 200 ₽</span></label>
+      <label class="row"><input type="checkbox" data-p="300" data-m="15"><span class="name">Снятие старого покрытия<small>15 минут</small></span><span class="cost">300 ₽</span></label>
+      <label class="row"><input type="checkbox" data-p="200" data-m="15"><span class="name">Простой дизайн на 2 ногтя<small>15 минут</small></span><span class="cost">200 ₽</span></label>
+      <div class="total"><span>Время: <strong id="t-min">90 мин</strong></span><span>Итого: <strong id="t-sum">1 500 ₽</strong></span></div>
+    </div>
+    <p class="note">Отметьте нужные услуги, и сумма пересчитается.</p>
+  </section>
+
+  <section id="zapis" aria-labelledby="h-zapis">
+    <h2 id="h-zapis">Как записаться</h2>
+    <ol class="steps">
+      <li><div><b>Напишите мне</b><span>В Telegram или по телефону: назовите услугу и удобный день.</span></div></li>
+      <li><div><b>Подтвердите время</b><span>Я отвечу в течение часа и закреплю за вами окно.</span></div></li>
+      <li><div><b>Приходите</b><span>Адрес и этаж пришлю накануне. Оплата после процедуры.</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-faq">
+    <h2 id="h-faq">Частые вопросы</h2>
+    <details><summary>Можно ли отменить или перенести запись?</summary><p>Да, предупредите меня за 3 часа, и мы выберем другое время.</p></details>
+    <details><summary>Сколько держится покрытие?</summary><p>Обычно 3 недели, но это зависит от ногтей и вашего образа жизни.</p></details>
+    <details><summary>Что делать, если покрытие отошло раньше?</summary><p>Напишите мне в течение недели, и я исправлю бесплатно.</p></details>
+  </section>
+
+  <section aria-labelledby="h-contact">
+    <h2 id="h-contact">Контакты</h2>
+    <div class="contact">
+      <p class="big" id="phone">+7 900 000-00-00</p>
+      <p>Telegram: @your_nickname</p>
+      <p>Адрес: ваш город, улица, дом</p>
+      <button class="copy" id="copy" type="button">Скопировать номер</button>
+    </div>
+  </section>
+
+  <footer>© Студия «Лада». Сайт создан как образец.</footer>
+</div>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('.row input');
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function calc() {
+    var sum = 0, min = 0;
+    boxes.forEach(function (b) { if (b.checked) { sum += +b.dataset.p; min += +b.dataset.m; } });
+    document.getElementById('t-sum').textContent = fmt(sum) + ' ₽';
+    document.getElementById('t-min').textContent = min + ' мин';
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', calc); });
+  calc();
+  var btn = document.getElementById('copy');
+  btn.addEventListener('click', function () {
+    var t = document.getElementById('phone').textContent;
+    var done = function () { btn.textContent = 'Скопировано'; };
+    try {
+      navigator.clipboard.writeText(t).then(done, function () {
+        var r = document.createRange(); r.selectNodeContents(document.getElementById('phone'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = 'Выделено, нажмите «Копировать»';
+      });
+    } catch (e) {}
+  });
+})();
+</script>
+
+</body>
+</html>
